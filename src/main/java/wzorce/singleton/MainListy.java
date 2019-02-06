@@ -3,13 +3,13 @@ package wzorce.singleton;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
-public class Main extends TestCase {
+public class MainListy extends TestCase {
     MSingleton singleton;
     MSingleton singleton1;
 
     public static void main(String [ ] args)
     {
-        Main main = new Main();
+        MainListy main = new MainListy();
         main.test();
     }
     void test(){

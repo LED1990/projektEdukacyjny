@@ -1,5 +1,7 @@
 package stringEdu;
 
+import interfejsy.TestowaKlasa;
+
 public class Main {
     public static void main(String[] args) {
         Main main = new Main();

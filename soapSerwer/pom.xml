@@ -12,7 +12,7 @@
     <artifactId>soapSerwer</artifactId>
     <properties>
         <spring-boot-ver>2.1.1.RELEASE</spring-boot-ver>
-        <apache-cxf-ver>2.7.18</apache-cxf-ver>
+        <apache-cxf-ver>3.2.5</apache-cxf-ver>
     </properties>
 
     <dependencyManagement>
@@ -36,9 +36,28 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <!--można użyć dependecie dla springboota i wtedy pozostałe nie są potrzebne!-->
+        <!--<dependency>-->
+        <!--<groupId>org.apache.cxf</groupId>-->
+        <!--<artifactId>cxf-spring-boot-starter-jaxws</artifactId>-->
+        <!--<version>${apache-cxf-ver}</version>-->
+        <!--</dependency>-->
+        <!--apache cxf - do tworzenia uslug soapowych-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-log4j2</artifactId>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            <version>${apache-cxf-ver}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-transports-http</artifactId>
+            <version>${apache-cxf-ver}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
         </dependency>
     </dependencies>
 

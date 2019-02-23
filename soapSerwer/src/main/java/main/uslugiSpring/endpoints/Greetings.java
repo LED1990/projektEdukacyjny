@@ -1,4 +1,4 @@
-package main.endpoints;
+package main.uslugiSpring.endpoints;
 
 import edukacyjne.services.greeting.GreetingRequest;
 import edukacyjne.services.greeting.GreetingResponse;

@@ -1,4 +1,4 @@
-package main.config;
+package main.uslugiSpring.config;
 
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.ApplicationContext;
@@ -16,6 +16,7 @@ public class SoapServicesConfig {
 
     /**
      * Tworząc serwer soap z springiem trzeba zarejestrować dispacher servlet do obsługi zapytań soap
+     * spring ma do tego  oddzielny servlet(inny niż dispacher servlet)
      * @param applicationContext
      * @return
      */
@@ -24,7 +25,7 @@ public class SoapServicesConfig {
         MessageDispatcherServlet messageDispatcherServlet = new MessageDispatcherServlet();
         messageDispatcherServlet.setApplicationContext(applicationContext);
         messageDispatcherServlet.setTransformSchemaLocations(true);
-        return new ServletRegistrationBean<>(messageDispatcherServlet, "/ws/*");
+        return new ServletRegistrationBean<>(messageDispatcherServlet, "/ws-spring/*");
     }
 
     /**

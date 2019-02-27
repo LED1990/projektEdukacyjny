@@ -19,17 +19,17 @@ public class SerwletGreetings extends HttpServlet {
     /**
      * jak jest zaimplementowana metoda service to nie wywołuje się do get
      * trzeba wywołać ręcznie
-     *
+     * KORZYSTAJĄC Z KLASY HTTPSERVLET DO TWORZENIA SERWLETÓW - NIE TRZEBA IMPOLEMENTOWAĆ METODY SERVICE!!!!
      * @param req
      * @param resp
      * @throws ServletException
      * @throws IOException
      */
-    @Override
-    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("metoda service servletu");
-        this.doGet(req, resp);
-    }
+//    @Override
+//    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        System.out.println("metoda service servletu");
+//        this.doGet(req, resp);
+//    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -38,6 +38,11 @@ public class SerwletGreetings extends HttpServlet {
         PrintWriter printWriter = resp.getWriter();
         printWriter.print("hello from do get!!");
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("metoda do post servletu");
     }
 
     @Override

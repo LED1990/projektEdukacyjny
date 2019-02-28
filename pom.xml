@@ -23,8 +23,6 @@
     <modules>
         <module>soapSerwer</module>
     </modules>
-
-
     <dependencies>
         <dependency>
             <groupId>log4j</groupId>

@@ -10,18 +10,6 @@
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="org.hibernate" level="info" additivity="false">
-            <AppenderRef ref="Console-Appender"/>
-        </Logger>
-        <Logger name="org.springframework.web" level="info" additivity="false">
-            <AppenderRef ref="Console-Appender"/>
-        </Logger>
-        <Logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">
-            <AppenderRef ref="Console-Appender"/>
-        </Logger>
-        <Logger name="org.hibernate.SQL" level="debug" additivity="false">
-            <AppenderRef ref="Console-Appender"/>
-        </Logger>
         <Logger name="main" level="debug" additivity="false">
             <AppenderRef ref="Console-Appender"/>
         </Logger>

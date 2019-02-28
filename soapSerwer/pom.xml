@@ -13,6 +13,7 @@
     <properties>
         <spring-boot-ver>2.1.1.RELEASE</spring-boot-ver>
         <apache-cxf-ver>3.2.5</apache-cxf-ver>
+        <saml-ver>2.6.4</saml-ver>
     </properties>
 
     <dependencyManagement>
@@ -23,6 +24,12 @@
                 <version>${spring-boot-ver}</version>
                 <type>pom</type>
                 <scope>import</scope>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-starter-logging</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -53,11 +60,17 @@
             <artifactId>cxf-rt-transports-http</artifactId>
             <version>${apache-cxf-ver}</version>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>3.1.0</version>
+        </dependency>
+        <!--dependecie do obsługi samla-->
+        <!-- https://mvnrepository.com/artifact/org.opensaml/opensaml -->
+        <dependency>
+            <groupId>org.opensaml</groupId>
+            <artifactId>opensaml</artifactId>
+            <version>${saml-ver}</version>
         </dependency>
     </dependencies>
 

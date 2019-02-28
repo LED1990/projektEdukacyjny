@@ -16,10 +16,14 @@ public class GreetingsCxf {
     @Autowired
     private CxfConfig cxfConfig;
 
+    @Autowired
+    GreetingCxfInterceptor greetingCxfInterceptor;
+
     @Bean
     public Endpoint endpoint() {
         EndpointImpl endpoint = new EndpointImpl(cxfConfig.springBus(), new GreetingServiceImpl());
         endpoint.publish("greetings");
+        endpoint.getInInterceptors().add(greetingCxfInterceptor);
         return endpoint;
     }
 }

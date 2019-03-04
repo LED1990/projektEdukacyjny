@@ -29,6 +29,7 @@
         <module>servlety</module>
         <module>servletyAdnotacje</module>
         <module>jerseyRest</module>
+        <module>cxfRest</module>
     </modules>
 
     <dependencyManagement>

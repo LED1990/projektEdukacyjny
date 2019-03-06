@@ -13,7 +13,7 @@ import javax.servlet.annotation.WebServlet;
  * na tomkacie wystarczy podać mapowanie z konfiguracji (bez kontekstu aplikacji)
  */
 
-@WebServlet(name = "cxfGreeting", urlPatterns = "/cxf/*", loadOnStartup = 1, initParams = {
+@WebServlet(name = "cxfGreeting", urlPatterns = "/cxfGreetings/*", loadOnStartup = 1, initParams = {
         @WebInitParam(name = "jaxrs.serviceClasses", value = "cxfrestwebservlet.GreetingsCxfSerwis"),
         @WebInitParam(name = "jaxrs.providers", value = "cxfrestwebservlet.GreetingsCxfSerwis")
 })

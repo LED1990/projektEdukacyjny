@@ -10,6 +10,9 @@ import org.slf4j.LoggerFactory;
 /**
  * interceptory moga pełnić te same zadania co filtry servletów
  * dodatkowo wykonuja się jesli zapytanie posiada body
+ * filtry moga przechwytywać wszystkie zapytania i dzialać przed interveptorami
+ * filtry sa przydatne do kontroli bezpieczenstwa
+ * interceptoy sa lepsze do pracy na body zapytania
  */
 public class MessageOutInterceptor extends AbstractPhaseInterceptor<Message> {
     private final Logger logger = LoggerFactory.getLogger(getClass());

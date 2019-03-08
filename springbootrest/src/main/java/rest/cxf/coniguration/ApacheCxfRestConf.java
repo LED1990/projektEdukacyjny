@@ -3,6 +3,8 @@ package rest.cxf.coniguration;
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
+import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
+import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +13,14 @@ import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import rest.cxf.serwisy.GreetingsServiceImpl;
+import rest.cxf.serwisy.KomputerServiceImpl;
 
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Configuration
 public class ApacheCxfRestConf {
@@ -24,7 +31,16 @@ public class ApacheCxfRestConf {
     private Bus bus;
 
     @Autowired
+    MessageInInterceptor messageInInterceptor;
+
+    @Autowired
+    MessageOutInterceptor messageOutInterceptor;
+
+    @Autowired
     GreetingsServiceImpl greetingsServiceImpl;
+
+    @Autowired
+    KomputerServiceImpl komputerServiceImpl;
 
     /**
      * konfigracj serwera (endpointa) dla usług apache cxf
@@ -36,10 +52,35 @@ public class ApacheCxfRestConf {
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
         endpoint.setBus(bus);
         endpoint.setAddress("/");
-        endpoint.setServiceBeans(Collections.singletonList(greetingsServiceImpl));
-        endpoint.getInInterceptors().add(new MessageInInterceptor());
-        endpoint.getOutInterceptors().add(new MessageOutInterceptor());
+        endpoint.setServiceBeans(Arrays.asList(greetingsServiceImpl, komputerServiceImpl));
+        endpoint.getInInterceptors().add(messageInInterceptor);
+        endpoint.getOutInterceptors().add(messageOutInterceptor);
+        endpoint.setExtensionMappings(przygotujExtensions());
+        endpoint.setProviders(przygotujProviders());
         return endpoint.create();
+    }
+
+    /**
+     * potrzebne dla apache cxf aby rozumial media typy podczas obsługi zapytań
+     * mówimy mu co będzie obsługiwane
+     * @return
+     */
+    private Map<Object, Object> przygotujExtensions(){
+        Map<Object, Object> extensionMappings = new HashMap<>();
+        extensionMappings.put("xml", MediaType.APPLICATION_XML);
+        extensionMappings.put("json", MediaType.APPLICATION_JSON);
+        return extensionMappings;
+    }
+
+    /**
+     * potrzebne zeby cxf wiedział jak parsować odpowiedż na odpowiedni kontent
+     * to robi prace - providery generuj body
+     * @return
+     */
+    private List<Object> przygotujProviders(){
+        List<Object> providers = new ArrayList<>();
+        providers.add(new JAXBElementProvider());
+        return providers;
     }
 
     /**

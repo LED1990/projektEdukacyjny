@@ -6,6 +6,7 @@ import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * interceptory moga pełnić te same zadania co filtry servletów
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * filtry sa przydatne do kontroli bezpieczenstwa
  * interceptoy sa lepsze do pracy na body zapytania
  */
+@Component
 public class MessageInInterceptor extends AbstractPhaseInterceptor<Message> {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

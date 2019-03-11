@@ -1,6 +1,6 @@
 package rest.cxf.serwisy.interfejsy;
 
-import rest.cxf.model.Komputer;
+import rest.cxf.model.KomputerPc;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -15,17 +15,17 @@ public interface KomputerService {
 
     @POST
     @Path("/dodaj")
-    @Consumes(MediaType.APPLICATION_XML)
-    void dodajNowy(Komputer komputer);
+    @Consumes(MediaType.APPLICATION_JSON)
+    void dodajNowy(KomputerPc komputer);
 
     @GET
     @Path("/komputery")
-    @Produces(MediaType.APPLICATION_XML)
-    List<Komputer> getAll();
+    @Produces(MediaType.APPLICATION_JSON)
+    List<KomputerPc> getAll();
 
     @GET
     @Path("/komputer")
-    @Produces(MediaType.APPLICATION_XML)
-    Komputer getKomputer();
+    @Produces(MediaType.APPLICATION_JSON)
+    KomputerPc getKomputer();
 
 }

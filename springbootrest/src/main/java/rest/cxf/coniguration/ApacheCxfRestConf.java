@@ -1,5 +1,6 @@
 package rest.cxf.coniguration;
 
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
@@ -79,6 +80,7 @@ public class ApacheCxfRestConf {
      */
     private List<Object> przygotujProviders(){
         List<Object> providers = new ArrayList<>();
+        providers.add(new JacksonJsonProvider());
         providers.add(new JAXBElementProvider());
         return providers;
     }

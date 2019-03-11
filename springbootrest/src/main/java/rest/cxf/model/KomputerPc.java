@@ -5,9 +5,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
-@XmlAccessorType(XmlAccessType.FIELD)
-public class Komputer {
+//@XmlRootElement
+//@XmlAccessorType(XmlAccessType.FIELD)
+public class KomputerPc {
 
     private String ram;
 
@@ -18,9 +18,9 @@ public class Komputer {
     /**
      * ważnie żeby był domyślny konstruktor bo apachcxf nie  ogarnie xmla!!!!
      */
-    public Komputer() {}
+    public KomputerPc() {}
 
-    public Komputer(String ram, String dysk, int rozmiar) {
+    public KomputerPc(String ram, String dysk, int rozmiar) {
         this.ram = ram;
         this.dysk = dysk;
         this.rozmiar = rozmiar;

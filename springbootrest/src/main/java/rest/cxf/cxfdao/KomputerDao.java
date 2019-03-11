@@ -1,20 +1,29 @@
 package rest.cxf.cxfdao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import rest.cxf.model.KomputerPc;
+import rest.cxf.model.fabryki.FabrykaKomputerow;
+import rest.cxf.model.fabryki.FabrykaPc;
+import rest.cxf.model.interfejsy.Komputer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class KomputerDao {
-//todo dorobic implementacje metod + zastosować interfesy i fabryke!!!
-    private List<KomputerPc> komputers;
+    private List<Komputer> komputers = new ArrayList<>();
 
-    public void dodajNowyKomputer(KomputerPc komputer){
-//        komputers.add(komputer);
+    @Autowired
+    private FabrykaPc fabrykaPc;
+
+    public void dodajNowyKomputer(String typ){
+        if (typ.equals("PC")){
+            komputers.add(FabrykaKomputerow.stworzKomputer(fabrykaPc));
+        }
     }
 
-    public List<KomputerPc> getAllKomputer(){
+    public List<Komputer> getAllKomputer(){
         return komputers;
     }
 

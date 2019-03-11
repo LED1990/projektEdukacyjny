@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import rest.cxf.cxfdao.KomputerDao;
 import rest.cxf.model.KomputerPc;
+import rest.cxf.model.interfejsy.Komputer;
 import rest.cxf.serwisy.interfejsy.KomputerService;
 
 import java.util.List;
@@ -18,13 +19,13 @@ public class KomputerServiceImpl implements KomputerService {
     KomputerDao komputerDao;
 
     @Override
-    public void dodajNowy(KomputerPc komputer) {
+    public void dodajNowy(String typ) {
         logger.info("dodawanie nowego komputera");
-        komputerDao.dodajNowyKomputer(komputer);
+        komputerDao.dodajNowyKomputer(typ);
     }
 
     @Override
-    public List<KomputerPc> getAll() {
+    public List<Komputer> getAll() {
         logger.info("pobiernaie wszystkich komputerów");
         return komputerDao.getAllKomputer();
     }

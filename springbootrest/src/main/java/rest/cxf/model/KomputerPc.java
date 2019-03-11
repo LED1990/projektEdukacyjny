@@ -1,13 +1,15 @@
 package rest.cxf.model;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import rest.cxf.model.interfejsy.Komputer;
 
-//@XmlRootElement
-//@XmlAccessorType(XmlAccessType.FIELD)
-public class KomputerPc {
+@Component
+@Scope("prototype")
+public class KomputerPc implements Komputer {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private String ram;
 
@@ -48,5 +50,10 @@ public class KomputerPc {
 
     public void setRozmiar(int rozmiar) {
         this.rozmiar = rozmiar;
+    }
+
+    @Override
+    public void wykonajObliczenia() {
+        logger.info("wykonuje obliczenia komputer PC");
     }
 }

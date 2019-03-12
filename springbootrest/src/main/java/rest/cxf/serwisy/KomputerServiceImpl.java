@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import rest.cxf.cxfdao.KomputerDao;
-import rest.cxf.model.KomputerPc;
 import rest.cxf.model.interfejsy.Komputer;
 import rest.cxf.serwisy.interfejsy.KomputerService;
 
@@ -31,7 +30,16 @@ public class KomputerServiceImpl implements KomputerService {
     }
 
     @Override
-    public KomputerPc getKomputer() {
-        return komputerDao.getKomputer();
+    public Komputer getKomputer(int index) {
+        logger.info("pobiernaie jednego elementu z listy");
+        return komputerDao.getKomputer(index);
     }
+
+    @Override
+    public void usunKomputerZListy(int index) {
+        logger.info("usuwanie komputera z listy");
+        komputerDao.usunKomputer(index);
+    }
+
+
 }

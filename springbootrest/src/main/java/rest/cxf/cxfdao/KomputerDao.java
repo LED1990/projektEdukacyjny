@@ -2,7 +2,6 @@ package rest.cxf.cxfdao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import rest.cxf.model.KomputerPc;
 import rest.cxf.model.fabryki.FabrykaKomputer;
 import rest.cxf.model.fabryki.FabrykaKomputerow;
 import rest.cxf.model.fabryki.FabrykaPc;

@@ -23,7 +23,7 @@ public class MessagesFilters implements Filter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         logger.debug("inicjalizacja filtra");
     }
 

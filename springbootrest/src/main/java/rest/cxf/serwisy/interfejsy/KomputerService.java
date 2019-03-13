@@ -1,5 +1,6 @@
 package rest.cxf.serwisy.interfejsy;
 
+import rest.cxf.model.KomputerDaneOgolne;
 import rest.cxf.model.interfejsy.Komputer;
 
 import javax.ws.rs.*;
@@ -12,7 +13,7 @@ public interface KomputerService {
     @POST
     @Path("/dodaj/{typ}")
     @Consumes(MediaType.APPLICATION_JSON)
-    void dodajNowy(@PathParam("typ") String typ);
+    void dodajNowy(@PathParam("typ") String typ, KomputerDaneOgolne komputer);
 
     @GET
     @Path("/komputery")

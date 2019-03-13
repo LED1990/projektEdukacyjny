@@ -2,6 +2,7 @@ package rest.cxf.cxfdao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import rest.cxf.model.KomputerDaneOgolne;
 import rest.cxf.model.fabryki.FabrykaKomputer;
 import rest.cxf.model.fabryki.FabrykaKomputerow;
 import rest.cxf.model.fabryki.FabrykaPc;
@@ -20,9 +21,9 @@ public class KomputerDao {
     @Autowired
     private KomputerRepo komputerRepo;
 
-    public void dodajNowyKomputer(String typ){
+    public void dodajNowyKomputer(String typ, KomputerDaneOgolne komputerDane){
         if (typ.equals("PC")){
-            komputerRepo.dodajDolisty(FabrykaKomputerow.stworzKomputer(fabrykaPc));
+            komputerRepo.dodajDolisty(FabrykaKomputerow.stworzKomputer(fabrykaPc, komputerDane));
         }
     }
 

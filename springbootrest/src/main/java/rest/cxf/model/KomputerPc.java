@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import rest.cxf.model.interfejsy.Komputer;
 
+import javax.annotation.PostConstruct;
+
 @Component
 @Scope("prototype")
 public class KomputerPc implements Komputer {
@@ -16,6 +18,11 @@ public class KomputerPc implements Komputer {
     private String dysk;
 
     private int rozmiar;
+
+    @PostConstruct
+    private void init(){
+        logger.info("powstaje nowy bean KomputerPc");
+    }
 
     /**
      * ważnie żeby był domyślny konstruktor bo apachcxf nie  ogarnie xmla!!!!

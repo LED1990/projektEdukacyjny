@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import rest.cxf.exceptions.MWebApplicationException;
 import rest.cxf.serwisy.GreetingsServiceImpl;
 import rest.cxf.serwisy.KomputerServiceImpl;
 
@@ -41,6 +42,9 @@ public class ApacheCxfRestConf {
 
     @Autowired
     KomputerServiceImpl komputerServiceImpl;
+
+    @Autowired
+    MWebApplicationException mWebApplicationException;
 
     /**
      * konfigracj serwera (endpointa) dla usług apache cxf
@@ -81,6 +85,7 @@ public class ApacheCxfRestConf {
         List<Object> providers = new ArrayList<>();
         providers.add(new JacksonJsonProvider());
         providers.add(new JAXBElementProvider());
+        providers.add(mWebApplicationException);
         return providers;
     }
 

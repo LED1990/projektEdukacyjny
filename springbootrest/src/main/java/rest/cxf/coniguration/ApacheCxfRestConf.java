@@ -3,8 +3,10 @@ package rest.cxf.coniguration;
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import org.apache.cxf.Bus;
 import org.apache.cxf.endpoint.Server;
+import org.apache.cxf.feature.Feature;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.provider.JAXBElementProvider;
+import org.apache.cxf.jaxrs.swagger.Swagger2Feature;
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import rest.cxf.serwisy.KomputerServiceImpl;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,7 @@ import java.util.Map;
 public class ApacheCxfRestConf {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final String BASE_PATH = "cxfspring";
 
     @Autowired
     private Bus bus;
@@ -61,6 +65,7 @@ public class ApacheCxfRestConf {
         endpoint.getOutInterceptors().add(messageOutInterceptor);
         endpoint.setExtensionMappings(przygotujExtensions());
         endpoint.setProviders(przygotujProviders());
+        endpoint.setFeatures(Collections.singletonList(swagger2Feature()));
         return endpoint.create();
     }
 
@@ -100,9 +105,26 @@ public class ApacheCxfRestConf {
     @Bean
     public ServletRegistrationBean cxfServlet(){
         logger.debug("-------------------------- konfiguracja servletu cxf");
-        final ServletRegistrationBean servletRegistrationBean =  new ServletRegistrationBean(new CXFServlet(), "/cxfspring/*");
+        final ServletRegistrationBean servletRegistrationBean =  new ServletRegistrationBean(new CXFServlet(), "/" + BASE_PATH + "/*");
         servletRegistrationBean.setLoadOnStartup(1);
         return servletRegistrationBean;
+    }
+
+    /**
+     * konfiguracja swaggera do opisania aplikacji
+     * dostęp pod adresem: http://localhost:9081/cxfspring/api-docs?url=/cxfspring/swagger.json
+     * @return
+     */
+    @Bean("swagger2Feature")
+    public Feature swagger2Feature(){
+        Swagger2Feature swagger2Feature = new Swagger2Feature();
+        swagger2Feature.setTitle("swager rest apache cxf tutorial");
+        swagger2Feature.setDescription("testuje działnie swaggera ze springiem bootem i cxf dla usług restowych");
+        swagger2Feature.setBasePath(BASE_PATH);
+        swagger2Feature.setVersion("v1");
+        swagger2Feature.setSchemes(new String[] { "http", "https" });
+        swagger2Feature.setPrettyPrint(true);
+        return swagger2Feature;
     }
 
 }

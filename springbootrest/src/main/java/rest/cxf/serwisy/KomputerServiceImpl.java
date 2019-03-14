@@ -9,6 +9,7 @@ import rest.cxf.model.KomputerDaneOgolne;
 import rest.cxf.model.interfejsy.Komputer;
 import rest.cxf.serwisy.interfejsy.KomputerService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Component
@@ -40,6 +41,26 @@ public class KomputerServiceImpl implements KomputerService {
     public void usunKomputerZListy(int index) {
         logger.info("usuwanie komputera z listy");
         komputerDao.usunKomputer(index);
+    }
+
+    /**
+     * porzykład requesta z buforowaniem odopwiedzi
+     * jeśli wszystkie odpowiedzi by miały być buforowane to by trzeba było to zrobć np w filtrze servletó
+     * nagłówki można edytować jak w przykładzie lub można użyć obiektu ResponseEntity
+     * w tym przypadku zasób będzie przez 10 sekund trzymany w przegladarce i requesty o ten zasub nie będa wychodzić do serwera
+     * informacje o tym parametrze nagłówka: https://developer.mozilla.org/pl/docs/Web/HTTP/Headers/Cache-Control
+     *
+     * UWAGA! -> alternatywnie mozna używać EXPIRES i określić datę kiedy zasób będzie trzeba pobrać jeszcze raz
+     * UWAGA! -> jeżeli catch control istnieje i zawiera max-age albo s-maxage to expires jest ignorowane.
+     * info o expires: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Expires
+     * @param response
+     * @return
+     */
+    @Override
+    public List<Komputer> getAllCatched(HttpServletResponse response) {
+        logger.info("pobiernaie wszystkich komputerów + catch control");
+        response.addHeader("Cache-Control","max-age=10, public");
+        return komputerDao.getAllKomputer();
     }
 
 

@@ -11,12 +11,16 @@ import org.apache.cxf.transport.servlet.CXFServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.ShallowEtagHeaderFilter;
 import rest.cxf.exceptions.MWebApplicationException;
 import rest.cxf.serwisy.GreetingsServiceImpl;
+import rest.cxf.serwisy.KomputerServiceEtagImpl;
 import rest.cxf.serwisy.KomputerServiceImpl;
+import rest.cxf.serwisy.interfejsy.KomputerServiceEtag;
 
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -25,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Filter;
 
 @Configuration
 public class ApacheCxfRestConf {
@@ -50,6 +55,9 @@ public class ApacheCxfRestConf {
     @Autowired
     MWebApplicationException mWebApplicationException;
 
+    @Autowired
+    KomputerServiceEtagImpl komputerServiceEtagImpl;
+
     /**
      * konfigracj serwera (endpointa) dla usług apache cxf
      * @return
@@ -60,7 +68,7 @@ public class ApacheCxfRestConf {
         JAXRSServerFactoryBean endpoint = new JAXRSServerFactoryBean();
         endpoint.setBus(bus);
         endpoint.setAddress("/");
-        endpoint.setServiceBeans(Arrays.asList(greetingsServiceImpl, komputerServiceImpl));
+        endpoint.setServiceBeans(Arrays.asList(greetingsServiceImpl, komputerServiceImpl, komputerServiceEtagImpl));
         endpoint.getInInterceptors().add(messageInInterceptor);
         endpoint.getOutInterceptors().add(messageOutInterceptor);
         endpoint.setExtensionMappings(przygotujExtensions());
@@ -105,7 +113,7 @@ public class ApacheCxfRestConf {
     @Bean
     public ServletRegistrationBean cxfServlet(){
         logger.debug("-------------------------- konfiguracja servletu cxf");
-        final ServletRegistrationBean servletRegistrationBean =  new ServletRegistrationBean(new CXFServlet(), "/" + BASE_PATH + "/*");
+        final ServletRegistrationBean<CXFServlet> servletRegistrationBean =  new ServletRegistrationBean<>(new CXFServlet(), "/" + BASE_PATH + "/*");
         servletRegistrationBean.setLoadOnStartup(1);
         return servletRegistrationBean;
     }
@@ -125,6 +133,20 @@ public class ApacheCxfRestConf {
         swagger2Feature.setSchemes(new String[] { "http", "https" });
         swagger2Feature.setPrettyPrint(true);
         return swagger2Feature;
+    }
+
+    /**
+     * korzystajac z ShallowEtagHeaderFilter nie będzie trzeba samemu zajmować się obsługa etagów!!
+     * ich wartość będzie generowana automatycznie przez springa.
+     * bez tego samemu by trzeba generować tagi, dodawać je do headera itp.
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean<ShallowEtagHeaderFilter> shallowEtagHeaderFilterFilterRegistrationBean(){
+        FilterRegistrationBean<ShallowEtagHeaderFilter> filterFilterRegistrationBean  = new FilterRegistrationBean<>(new ShallowEtagHeaderFilter());
+        filterFilterRegistrationBean.addUrlPatterns("/" + BASE_PATH +"/v1/komp/etag/*");
+        filterFilterRegistrationBean.setName("FiltrZapytanEtag");
+        return filterFilterRegistrationBean;
     }
 
 }

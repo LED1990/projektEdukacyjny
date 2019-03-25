@@ -30,6 +30,7 @@
         <module>servletyAdnotacje</module>
         <module>jerseyRest</module>
         <module>cxfRest</module>
+        <module>springboot</module>
         <module>kolekcje</module>
     </modules>
 

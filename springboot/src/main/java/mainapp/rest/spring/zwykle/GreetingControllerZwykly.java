@@ -1,4 +1,4 @@
-package mainapp.rest.kontrolery.zwykle;
+package mainapp.rest.spring.zwykle;
 
 import org.springframework.stereotype.Controller;
 

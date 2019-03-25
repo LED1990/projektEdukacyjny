@@ -1,4 +1,4 @@
-package mainapp.rest.springsecurity.zwykle;
+package mainapp.rest.spring.zwykle;
 
 import org.springframework.stereotype.Controller;
 

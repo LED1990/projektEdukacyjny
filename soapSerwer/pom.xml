@@ -47,7 +47,7 @@
         <!--można użyć dependecie dla springboota i wtedy pozostałe nie są potrzebne!-->
         <!--<dependency>-->
         <!--<groupId>org.apache.cxf</groupId>-->
-        <!--<artifactId>cxf-springsecurity-boot-starter-jaxws</artifactId>-->
+        <!--<artifactId>cxf-spring-boot-starter-jaxws</artifactId>-->
         <!--<version>${apache-cxf-ver}</version>-->
         <!--</dependency>-->
         <!--apache cxf - do tworzenia uslug soapowych-->

@@ -16,7 +16,7 @@ public class SoapServicesConfig {
 
     /**
      * Tworząc serwer soap z springiem trzeba zarejestrować dispacher servlet do obsługi zapytań soap
-     * springsecurity ma do tego  oddzielny servlet(inny niż dispacher servlet)
+     * spring ma do tego  oddzielny servlet(inny niż dispacher servlet)
      * @param applicationContext
      * @return
      */
@@ -25,7 +25,7 @@ public class SoapServicesConfig {
         MessageDispatcherServlet messageDispatcherServlet = new MessageDispatcherServlet();
         messageDispatcherServlet.setApplicationContext(applicationContext);
         messageDispatcherServlet.setTransformSchemaLocations(true);
-        return new ServletRegistrationBean<>(messageDispatcherServlet, "/ws-springsecurity/*");
+        return new ServletRegistrationBean<>(messageDispatcherServlet, "/ws-spring/*");
     }
 
     /**

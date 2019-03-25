@@ -13,9 +13,9 @@ public class CxfConfig {
     /**
      * rejestrowanie  servletu apache cxf zeby można było obsługiwać zapytania soap przy  pomocy apache cxf
      * !!!jeśli używam dependencie niżej
-     * cxf-springsecurity-boot-starter-jaxws <----------------
+     * cxf-spring-boot-starter-jaxws <----------------
      * dla springboota nie muszę rejestrować tego servletu!!!
-     * springsecurity boot robi to za mnie
+     * spring boot robi to za mnie
      * ważna jest '*' podczas rejestracji servletu!!!! pozwala ona obłsugiwać wszystkie mapowania (URLe)
      * @return
      */

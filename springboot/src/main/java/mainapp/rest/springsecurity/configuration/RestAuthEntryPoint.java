@@ -1,4 +1,4 @@
-package mainapp.rest.spring.configuration;
+package mainapp.rest.springsecurity.configuration;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * nadpisanie domyslnej odpowiedzi spring security jezeli w zapytaniu rest nie ma danych uwierzytelniajacych lub gdy sa niewłaściwe
+ * nadpisanie domyslnej odpowiedzi springsecurity security jezeli w zapytaniu rest nie ma danych uwierzytelniajacych lub gdy sa niewłaściwe
  * dodatkowo trzeba dorobic obsluge logowania przy pomocy danch z requesta (dla zwyklych uslug restowych nie ma GUI do logowania!!!)
  */
 @Component

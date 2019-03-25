@@ -1,4 +1,4 @@
-package mainapp.rest.spring.configuration;
+package mainapp.rest.springsecurity.configuration;
 
 
 import org.springframework.security.core.Authentication;
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * normalnie spring security przrzuca niezalogowanego uzytkownika na strone logowania
+ * normalnie springsecurity security przrzuca niezalogowanego uzytkownika na strone logowania
  * w uslugach tylko restowych nie bedzie tego gui wiec autoryzacje trzeba wykonac na podstawie requesta
  * tutaj robimy obsluge autoryzacji uslugi restowej + usuwamy przekierowanie do strony logowania
  */

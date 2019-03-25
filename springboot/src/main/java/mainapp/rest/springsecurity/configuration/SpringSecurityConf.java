@@ -1,4 +1,4 @@
-package mainapp.rest.spring.configuration;
+package mainapp.rest.springsecurity.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * WebSecurityConfigurerAdapter -> to jest filtr zapytan dla spring security
+ * WebSecurityConfigurerAdapter -> to jest filtr zapytan dla springsecurity security
  */
 @Configuration
 @EnableWebSecurity

@@ -101,7 +101,7 @@ public class ApacheCxfRestConf {
     }
 
     /**
-     * korzystając ze springboota i apache cxf po dodadniu dependency cxf-spring-boot-starter-jaxrs springboot automatycznie zaresjestruje servlet
+     * korzystając ze springboota i apache cxf po dodadniu dependency cxf-springsecurity-boot-starter-jaxrs springboot automatycznie zaresjestruje servlet
      * dla apache cxf.
      * Zeby jednak zminić mapowanie servletu z domyślnego ("services/*) należy ręcznie zarejestrowac servlet apache cxf
      * przykład poniżej

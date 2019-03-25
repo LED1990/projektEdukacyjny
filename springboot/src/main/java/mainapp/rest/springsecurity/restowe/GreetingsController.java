@@ -1,4 +1,4 @@
-package mainapp.rest.spring.restowe;
+package mainapp.rest.springsecurity.restowe;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class GreetingsController {
 
     /**
-     * to mapowanie nie jest bronione przez spring security
+     * to mapowanie nie jest bronione przez springsecurity security
      * @return
      */
     @RequestMapping("/kontrolerRest")
     public String powitanieKontrolerResowy(){
-        return "witaj z kontrolera resowego na spring bootcie";
+        return "witaj z kontrolera resowego na springsecurity bootcie";
     }
 
     @RequestMapping("/dlaAdmina")
@@ -28,6 +28,6 @@ public class GreetingsController {
 
     @RequestMapping("/dlaZalogowanych")
     public String powitanieZalogowanych(){
-        return "witajcie użytkownicy widziani przez spring security!";
+        return "witajcie użytkownicy widziani przez springsecurity security!";
     }
 }

@@ -36,6 +36,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
         <!--dodany apache cxf do obslugi rest dla springboot-->
         <dependency>
             <groupId>org.apache.cxf</groupId>

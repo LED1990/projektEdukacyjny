@@ -1,4 +1,4 @@
-package mainapp.rest.spring.restowe;
+package mainapp.rest.spring.kontrollery.restowe;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

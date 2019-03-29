@@ -1,5 +1,7 @@
 package mainapp.rest.spring.security.configuration;
 
+import mainapp.rest.spring.security.handlery.RestAuthFailHandler;
+import mainapp.rest.spring.security.handlery.RestAuthSucessHandler;
 import mainapp.rest.spring.security.providers.AuthProviderRest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,12 @@ public class SpringSecurityConf extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private AuthProviderRest authProviderRest;
+
+    @Autowired
+    private RestAuthSucessHandler restAuthSucessHandler;
+
+    @Autowired
+    private RestAuthFailHandler restAuthFailHandler;
 
     /**
      * tworzenie przykladowych uzytkownikow ktorzy będa mogli korzystać z aplikacji
@@ -57,17 +65,18 @@ public class SpringSecurityConf extends WebSecurityConfigurerAdapter {
         http.csrf()
             .disable()
             .authorizeRequests()
-            .antMatchers("/testSecurity/logowanie")
-            .permitAll()
-            .antMatchers("/testSecurity/**")
-            .authenticated()
+            .antMatchers("/testSecurity/admin").hasAuthority("ADM")
+            .antMatchers("/testSecurity/logowanie").permitAll()
+            .antMatchers("/testSecurity/**").authenticated()
             .and()
             .formLogin()
             .loginPage("/testSecurity/logowanie")
             .loginProcessingUrl("/testSecurity/perform_logowanie")//to laczy formularz logowani z spring security -> bez tego nie wywola sie authentication provider
             .defaultSuccessUrl("/testSecurity/stronaGlowna", true)//tu przekieruje jak autoryzacja bedzie ok
+            .successHandler(restAuthSucessHandler)//kolejnosc ma znaczenie!! ustawienie handelra po defaultSuccessUrl spowoduje że domyślna strona zostanie zignorowana! jeżeli hendler by byl wyzej to jego metoda by sie nie wykonala ! to samo z failure handlerem!
             //            .usernameParameter("jakas wartosc")//pozwala nadpisac id pola nazwy uzytkownika z customowego formularza logowania -> domyslnie jest username
             .failureUrl("/testSecurity/logowanie?error=true")
+            .failureHandler(restAuthFailHandler)
             .and()
             .logout()
             .logoutUrl("/testSecurity/perform_wylogowanie")

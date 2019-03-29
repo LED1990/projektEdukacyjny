@@ -11,6 +11,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 /**
  * ten provider ma wspolpracowac z mockowana usluga restowa z soapui
  * <p>
@@ -29,18 +31,23 @@ public class AuthProviderRest implements AuthenticationProvider {
     }
 
     /**
-     * wykonuje sie gdy dostarczone zostana informacje do logowania
+     * wykonuje sie gdy dostarczone zostana informacje do logowania (np postem)
+     * metoda musi zwracac UsernamePasswordAuthenticationToken
+     * <p>
+     * w obiekcie authenticate sa dane z formularza logowania (login i haslo)
+     * domysle login i haslo sa przypiete do formularza do elementow o id odpowiednio -> username password
+     * mozna nadpisac te identyfikatory ale trzeba to wtedy uwzglednic w konfiguracji spring security
      */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        logger.info("wywołanie usługi rest w celu pobranie informacji o użytkowniku");
         logger.info("obiekt autoryzacji: " + authentication);
-        /**
-         * na tym etapie mam juz dane uzytkownika z uslugi restowej
-         */
-        User user = soupUiAuthService.pobierzDaneUzytkownika();
-        //todo trzeba zworcic obiekt authentication + ustawić flagi (authenticated - jezeli jest ok wszystko itp)
-        return null;
+        User user = soupUiAuthService.pobierzDaneUzytkownika();  // do uslugi mozna przekazac login i haslo uzytkownika ktore sa w obiekcie authentication!
+        Authentication auth = null;
+        if (user != null) {
+            //konstruktor automatycznie ustawia authenticated na true
+            auth = new UsernamePasswordAuthenticationToken(authentication.getPrincipal(), authentication.getCredentials(), new ArrayList<>());//new arraylist => pusta lista uprawnien
+        }
+        return auth;
     }
 
     @Override

@@ -1,13 +1,11 @@
 package mainapp.rest.spring.security.configuration;
 
 import mainapp.rest.spring.security.providers.AuthProviderRest;
-import mainapp.rest.spring.serwisy.SoupUiAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,14 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * WebSecurityConfigurerAdapter -> to jest filtr zapytan dla spring security
  */
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = false)
 public class SpringSecurityConf extends WebSecurityConfigurerAdapter {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
-    private BasicAuthEntry basicAuthEntry;
-
-    @Autowired
-    private RestAuthEntryPoint restAuthEntryPoint;
 
     @Autowired
     private AuthProviderRest authProviderRest;
@@ -40,16 +33,12 @@ public class SpringSecurityConf extends WebSecurityConfigurerAdapter {
      */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //        auth.inMemoryAuthentication()
-        //            .withUser("admin").password(passwordEncoder().encode("admin")).roles("ADM")
-        //            .and()
-        //            .withUser("user1").password(passwordEncoder().encode("user1")).roles("USR");
-
         /**
          * rejestrowanie nowego providera do autorayzcji w spring security
+         * pozwala na zrobienie customowej logiki logowania
          */
         auth.authenticationProvider(authProviderRest);
-        logger.info("dodany nowy provider " + authProviderRest +" is configured: " + auth.isConfigured());
+        logger.info("dodany nowy provider " + authProviderRest + " is configured: " + auth.isConfigured());
     }
 
     /**
@@ -61,28 +50,30 @@ public class SpringSecurityConf extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         /**
-         * przyklad konfiguracji na basic authentication
-         */
-        //        http.authorizeRequests()
-        //            .antMatchers("/testSecurity/**").permitAll()
-        //            .antMatchers("/restowe/dlaZalogowanych").authenticated()
-        //            .antMatchers("/restowe/dlaAdmina").hasRole("ADM")
-        //            .and()
-        //            .httpBasic()
-        //            .authenticationEntryPoint(basicAuthEntry);
-        /**
          * konfiguracja pod testy dzialania custom authentication providera
-         * żeby dostarczyc login i haslo uzylem httpBasic
-         * po podaniu loginu i haslo provider robi reszte!
+         * login i haslo sa dostarczane z fotmularza logowania
+         * provider robi reszte autoryzacji!
          */
-        http.authorizeRequests()
-            .antMatchers("/testSecurity/stronaGlowna").permitAll()
-            .antMatchers("/testSecurity/admin").hasRole("ADM")
-            .antMatchers("/testSecurity/**").authenticated()
+        http.csrf()
+            .disable()
+            .authorizeRequests()
+            .antMatchers("/testSecurity/logowanie")
+            .permitAll()
+            .antMatchers("/testSecurity/**")
+            .authenticated()
             .and()
-            .httpBasic();
-        logger.info("koniec konfiguracji spring security");
+            .formLogin()
+            .loginPage("/testSecurity/logowanie")
+            .loginProcessingUrl("/testSecurity/perform_logowanie")//to laczy formularz logowani z spring security -> bez tego nie wywola sie authentication provider
+            .defaultSuccessUrl("/testSecurity/stronaGlowna", true)//tu przekieruje jak autoryzacja bedzie ok
+            //            .usernameParameter("jakas wartosc")//pozwala nadpisac id pola nazwy uzytkownika z customowego formularza logowania -> domyslnie jest username
+            .failureUrl("/testSecurity/logowanie?error=true")
+            .and()
+            .logout()
+            .logoutUrl("/testSecurity/perform_wylogowanie")
+            .deleteCookies("JSESSIONID");
 
+        logger.info("koniec konfiguracji spring security");
     }
 
     @Bean

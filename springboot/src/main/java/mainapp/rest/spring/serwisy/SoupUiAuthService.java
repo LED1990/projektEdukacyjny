@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * tesotwy klient do pobierania danych uzytkownika z uslugi mockowanej na soap ui
  */
 @Service
-public class SoupUiAuthService{
+public class SoupUiAuthService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Value("${rest.dane.uzytkowanika.url}")
@@ -29,6 +29,7 @@ public class SoupUiAuthService{
 
     /**
      * usluga restowa biera dane o uzytkowniku z mocka
+     *
      * @return
      * @throws UsernameNotFoundException
      */
